@@ -11,11 +11,11 @@ Needs Neovim 0.10+ (0.11 recommended).
 
 ### lazy.nvim
 
-Replace `<your-github-user>` with the account you pushed the repo to:
+Replace `hashchet` with the account you pushed the repo to:
 
 ```lua
 {
-  "<your-github-user>/duality.nvim",
+  "hashchet/duality.nvim",
   name = "duality",
   lazy = false,
   priority = 1000,
