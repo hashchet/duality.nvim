@@ -11,11 +11,9 @@ Needs Neovim 0.10+ (0.11 recommended).
 
 ### lazy.nvim
 
-Replace `<your-github-user>` with the account you pushed the repo to:
-
 ```lua
 {
-  "<your-github-user>/duality.nvim",
+  "hashchet/duality.nvim",
   name = "duality",
   lazy = false,
   priority = 1000,
@@ -32,18 +30,6 @@ Replace `<your-github-user>` with the account you pushed the repo to:
 }
 ```
 
-While developing, point lazy at your local clone instead of GitHub:
-
-```lua
-{ dir = "~/theme/Duality/duality.nvim", name = "duality", lazy = false, priority = 1000, ... }
-```
-
-### Without a plugin manager
-
-```lua
-vim.opt.rtp:prepend(vim.fn.expand("~/theme/Duality/duality.nvim"))
-vim.cmd.colorscheme("duality")
-```
 
 ## Options
 
@@ -56,6 +42,7 @@ vim.cmd.colorscheme("duality")
 | `bright_comments` | `false` | Lift comments halfway to Veil (Ashen robe is 3.3:1 on Abyss, 2.8:1 on the cursor line) |
 | `terminal_colors` | `true` | Sets `:terminal` ANSI 16 to match Kitty |
 | `on_highlights` | `nil` | `function(hl, c)`: change any group before it's applied |
+
 
 ```lua
 require("duality").setup({
