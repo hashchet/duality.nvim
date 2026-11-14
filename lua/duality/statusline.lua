@@ -1,4 +1,5 @@
--- Duality statusline (no plugins needed).
+-- Duality statusline (no plugins needed). Same shape as lualine and Starship:
+-- a rounded cap, then powerline arrows.
 -- The reverse of the Starship prompt: it fades from light into shadow.
 --   mode → git (Ember) → file (Penance) ··· diagnostics (Umbral) → filetype (Twilight robe) → clock (Dusk)
 -- Usage: require("duality.statusline").setup()
@@ -7,8 +8,11 @@ local M = {}
 local c = require("duality.palette")
 
 M.config = {
-  separator_left = "", -- powerline slants; set to "" for flat blocks
-  separator_right = "",
+  -- Nerd Font glyphs, written as escapes so they survive copy and paste.
+  separator_left = "\u{e0b0}", -- powerline arrows, as in Starship; "" for flat blocks
+  separator_right = "\u{e0b2}",
+  cap_left = "\u{e0b6}", -- rounded ends; "" to turn off
+  cap_right = "\u{e0b4}",
   clock = true,
   clock_format = "%H:%M",
 }
@@ -58,10 +62,10 @@ local function diagnostics()
   local w = counts[vim.diagnostic.severity.WARN] or 0
   local parts = {}
   if e > 0 then
-    table.insert(parts, "%#DualityDiagError# " .. e)
+    table.insert(parts, "%#DualityDiagError# \u{f057} " .. e)
   end
   if w > 0 then
-    table.insert(parts, "%#DualityDiagWarn# " .. w)
+    table.insert(parts, "%#DualityDiagWarn# \u{f071} " .. w)
   end
   return #parts > 0 and table.concat(parts, " ") or nil
 end
@@ -72,13 +76,16 @@ function M.render()
   local out = {}
 
   -- Left: the lit end.
+  if M.config.cap_left ~= "" then
+    table.insert(out, sep(mode_bg, c.abyss) .. M.config.cap_left)
+  end
   table.insert(out, "%#" .. mode_hl .. "# " .. label .. " ")
   local prev = mode_bg
 
   local head = git_head()
   if head then
     head = head:gsub("%%", "%%%%")
-    table.insert(out, sep(prev, c.ember) .. L .. "%#DualityGit#  " .. head .. " ")
+    table.insert(out, sep(prev, c.ember) .. L .. "%#DualityGit# \u{e0a0} " .. head .. " ")
     prev = c.ember
   end
 
@@ -87,7 +94,7 @@ function M.render()
     name = "[No Name]"
   end
   name = name:gsub("%%", "%%%%")
-  local flags = (vim.bo.modified and " ●" or "") .. ((vim.bo.readonly or not vim.bo.modifiable) and " " or "")
+  local flags = (vim.bo.modified and " ●" or "") .. ((vim.bo.readonly or not vim.bo.modifiable) and " \u{f023}" or "")
   table.insert(out, sep(prev, c.penance) .. L .. "%#DualityFile# " .. name .. flags .. " ")
   table.insert(out, sep(c.penance, c.void) .. L .. "%#DualityFill#")
 
@@ -111,6 +118,9 @@ function M.render()
   table.insert(out, sep(c.dusk, prev) .. R .. "%#DualityClock# %l:%c ")
   if M.config.clock then
     table.insert(out, "· " .. os.date(M.config.clock_format) .. " ")
+  end
+  if M.config.cap_right ~= "" then
+    table.insert(out, sep(c.dusk, c.abyss) .. M.config.cap_right)
   end
 
   return table.concat(out)
