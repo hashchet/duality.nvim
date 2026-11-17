@@ -11,18 +11,16 @@ Needs Neovim 0.10+ (0.11 recommended).
 
 ### lazy.nvim
 
-Replace `hashchet` with the account you pushed the repo to:
-
 ```lua
-{
+return {
   "hashchet/duality.nvim",
   name = "duality",
   lazy = false,
   priority = 1000,
   opts = {
-    -- transparent = true,      -- let Kitty's Abyss show through
+    -- transparent = true,      -- default false
     -- dim_inactive = false,    -- keep inactive splits on Abyss
-    -- bright_comments = true,  -- if Ashen robe comments are too faint
+    -- bright_comments = true,  -- if comments are too faint
   },
   config = function(_, opts)
     require("duality").setup(opts)
