@@ -464,6 +464,12 @@ function M.get(c, o)
   hl.BufferLineIndicatorSelected = { fg = c.holy_nova, bg = c.abyss }
 
   -- noice / notify
+  -- nvim-notify fades towards NotifyBackground, so it always needs a real colour,
+  -- even in transparent mode. Abyss matches Kitty, so fades blend into what's behind.
+  hl.NotifyBackground = { bg = c.abyss }
+  for _, lvl in ipairs({ "ERROR", "WARN", "INFO", "DEBUG", "TRACE" }) do
+    hl["Notify" .. lvl .. "Body"] = { fg = c.priest_white, bg = float_bg }
+  end
   hl.NoiceCmdlinePopupBorder = { link = "FloatBorder" }
   hl.NoiceCmdlineIcon = { fg = c.halo }
   hl.NoiceCmdlinePopupTitle = { link = "FloatTitle" }
