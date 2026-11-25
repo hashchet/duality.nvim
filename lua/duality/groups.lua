@@ -466,7 +466,7 @@ function M.get(c, o)
   -- noice / notify
   -- nvim-notify fades towards NotifyBackground, so it always needs a real colour,
   -- even in transparent mode. Abyss matches Kitty, so fades blend into what's behind.
-  hl.NotifyBackground = { bg = c.abyss }
+  hl.NotifyBackground = { bg = "#0D0C11" }
   for _, lvl in ipairs({ "ERROR", "WARN", "INFO", "DEBUG", "TRACE" }) do
     hl["Notify" .. lvl .. "Body"] = { fg = c.priest_white, bg = float_bg }
   end
